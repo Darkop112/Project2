@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj": {}
+    "C:\\Users\\Darky\\Source\\Repos\\Project2\\FinalProject\\FinalProject.csproj": {}
   },
   "projects": {
-    "D:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj": {
+    "C:\\Users\\Darky\\Source\\Repos\\Project2\\FinalProject\\FinalProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj",
+        "projectUniqueName": "C:\\Users\\Darky\\Source\\Repos\\Project2\\FinalProject\\FinalProject.csproj",
         "projectName": "FinalProject",
-        "projectPath": "D:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj",
+        "projectPath": "C:\\Users\\Darky\\Source\\Repos\\Project2\\FinalProject\\FinalProject.csproj",
         "packagesPath": "C:\\Users\\Darky\\.nuget\\packages\\",
-        "outputPath": "D:\\C# Project\\FinalProject\\FinalProject\\obj\\",
+        "outputPath": "C:\\Users\\Darky\\Source\\Repos\\Project2\\FinalProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Darky\\AppData\\Roaming\\NuGet\\NuGet.Config",
