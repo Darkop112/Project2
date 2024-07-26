@@ -89,6 +89,7 @@ namespace FinalProject
                         PaymentMethod = paymentMethod,
                         Payment = payment,
                         Change = change
+                        change =Hide,
                     };
 
                     SalesHistory.AddSale(sale);
