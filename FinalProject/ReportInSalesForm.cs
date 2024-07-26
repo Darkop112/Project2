@@ -1,80 +1,177 @@
 ﻿using System;
-using System.Windows.Forms;
+using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Printing;
+using System.Linq;
+using System.Windows.Forms;
 
-namespace FinalProject { 
-public class ReportInSalesForm : Form
+namespace FinalProject
 {
-    private DateTimePicker fromDatePicker, toDatePicker;
-    private Button dailyReportButton, monthlyReportButton, productWiseReportButton, customerWiseReportButton;
-    private DataGridView reportDataGridView;
-
-    public ReportInSalesForm()
+    public partial class ReportInSalesForm : Form
     {
-        // Initialize components
-        fromDatePicker = new DateTimePicker { Dock = DockStyle.Top };
-        toDatePicker = new DateTimePicker { Dock = DockStyle.Top };
-        dailyReportButton = new Button { Text = "Generate Daily Report", Dock = DockStyle.Top };
-        monthlyReportButton = new Button { Text = "Generate Monthly Report", Dock = DockStyle.Top };
-        productWiseReportButton = new Button { Text = "Generate Product-wise Report", Dock = DockStyle.Top };
-        customerWiseReportButton = new Button { Text = "Generate Customer-wise Report", Dock = DockStyle.Top };
-        reportDataGridView = new DataGridView { Dock = DockStyle.Fill };
+        public ReportInSalesForm()
+        {
+            InitializeComponent();
+            dailyReportButton.Click += DailyReportButton_Click;
+            monthlyReportButton.Click += MonthlyReportButton_Click;
+            productWiseReportButton.Click += ProductWiseReportButton_Click;
+            customerWiseReportButton.Click += CustomerWiseReportButton_Click;
+            printButton.Click += (s, e) => PrintSalesData();
+        }
 
-        // Add components to the form
-        this.Controls.Add(reportDataGridView);
-        this.Controls.Add(customerWiseReportButton);
-        this.Controls.Add(productWiseReportButton);
-        this.Controls.Add(monthlyReportButton);
-        this.Controls.Add(dailyReportButton);
-        this.Controls.Add(toDatePicker);
-        this.Controls.Add(fromDatePicker);
+        private void DailyReportButton_Click(object sender, EventArgs e)
+        {
+            LoadReportData("daily");
+        }
 
-        // Event handlers
-        dailyReportButton.Click += DailyReportButton_Click;
-        monthlyReportButton.Click += MonthlyReportButton_Click;
-        productWiseReportButton.Click += ProductWiseReportButton_Click;
-        customerWiseReportButton.Click += CustomerWiseReportButton_Click;
+        private void MonthlyReportButton_Click(object sender, EventArgs e)
+        {
+            LoadReportData("monthly");
+        }
+
+        private void ProductWiseReportButton_Click(object sender, EventArgs e)
+        {
+            LoadReportData("product-wise");
+        }
+
+        private void CustomerWiseReportButton_Click(object sender, EventArgs e)
+        {
+            LoadReportData("customer-wise");
+        }
+
+        private void LoadReportData(string reportType)
+        {
+            var sales = SalesHistory.GetSales();
+            var filteredSales = new List<Sale>();
+
+            if (reportType == "daily")
+            {
+                var today = DateTime.Today;
+                filteredSales = sales.Where(s => s.Date.Date == today).ToList();
+            }
+            else if (reportType == "monthly")
+            {
+                var currentMonth = DateTime.Today.Month;
+                var currentYear = DateTime.Today.Year;
+                filteredSales = sales.Where(s => s.Date.Month == currentMonth && s.Date.Year == currentYear).ToList();
+            }
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Date");
+            dt.Columns.Add("Items");
+            dt.Columns.Add("Total Amount");
+            dt.Columns.Add("Payment Method");
+            dt.Columns.Add("Payment");
+            dt.Columns.Add("Change");
+
+            foreach (var sale in filteredSales)
+            {
+                string itemsDescription = string.Join(", ", sale.Items.Select(i => $"{i.Name} x{i.Quantity}"));
+                dt.Rows.Add(
+                    sale.Date.ToString("yyyy-MM-dd"),
+                    itemsDescription,
+                    sale.TotalAmount.ToString("C"),
+                    sale.PaymentMethod,
+                    sale.Payment.ToString("C"),
+                    sale.Change.ToString("C"));
+            }
+
+            reportDataGridView.DataSource = dt;
+        }
+
+        private void PrintSalesData()
+        {
+            PrintDocument printDocument = new PrintDocument();
+            printDocument.PrintPage += PrintDocument_PrintPage;
+
+            PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog
+            {
+                Document = printDocument
+            };
+
+            printPreviewDialog.ShowDialog();
+        }
+
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            int x = 10;
+            int y = 10;
+            int rowHeight = 30;
+            int columnWidth = 100;
+            int headerHeight = 30;
+
+            Font font = new Font("Arial", 10);
+            Brush brush = Brushes.Black;
+
+            // Draw column headers
+            foreach (DataGridViewColumn column in reportDataGridView.Columns)
+            {
+                e.Graphics.DrawString(column.HeaderText, font, brush, x, y);
+                x += columnWidth;
+            }
+
+            y += headerHeight;
+            x = 10;
+
+            // Draw rows
+            foreach (DataGridViewRow row in reportDataGridView.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                x = 10;
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    string cellText = cell.Value?.ToString() ?? string.Empty;
+
+                    var textLines = SplitTextIntoLines(cellText, font, columnWidth);
+                    foreach (var line in textLines)
+                    {
+                        e.Graphics.DrawString(line, font, brush, x, y);
+                        y += font.Height;
+                    }
+
+                    x += columnWidth;
+                }
+                y += rowHeight;
+            }
+        }
+
+        private List<string> SplitTextIntoLines(string text, Font font, int maxWidth)
+        {
+            var lines = new List<string>();
+            var words = text.Split(' ');
+
+            string currentLine = string.Empty;
+
+            foreach (var word in words)
+            {
+                string testLine = currentLine + word + " ";
+
+                if (TextRenderer.MeasureText(testLine, font).Width > maxWidth)
+                {
+                    if (currentLine.Length > 0)
+                    {
+                        lines.Add(currentLine.TrimEnd());
+                        currentLine = word + " ";
+                    }
+                    else
+                    {
+                        lines.Add(word);
+                    }
+                }
+                else
+                {
+                    currentLine = testLine;
+                }
+            }
+
+            if (currentLine.Length > 0)
+            {
+                lines.Add(currentLine.TrimEnd());
+            }
+
+            return lines;
+        }
     }
-
-    private void DailyReportButton_Click(object sender, EventArgs e)
-    {
-        // Implement daily report generation logic
-        LoadReportData("daily");
-    }
-
-    private void MonthlyReportButton_Click(object sender, EventArgs e)
-    {
-        // Implement monthly report generation logic
-        LoadReportData("monthly");
-    }
-
-    private void ProductWiseReportButton_Click(object sender, EventArgs e)
-    {
-        // Implement product-wise report generation logic
-        LoadReportData("product-wise");
-    }
-
-    private void CustomerWiseReportButton_Click(object sender, EventArgs e)
-    {
-        // Implement customer-wise report generation logic
-        LoadReportData("customer-wise");
-    }
-
-    private void LoadReportData(string reportType)
-    {
-        // Replace with actual report data loading logic
-        DataTable dt = new DataTable();
-        dt.Columns.Add("Date");
-        dt.Columns.Add("Product");
-        dt.Columns.Add("Quantity");
-        dt.Columns.Add("Total");
-
-        // Sample data
-        dt.Rows.Add(DateTime.Now.ToString(), "Apple", 2, 40.00);
-        dt.Rows.Add(DateTime.Now.ToString(), "Banana", 5, 75.00);
-
-        reportDataGridView.DataSource = dt;
-    }
-}
-
 }

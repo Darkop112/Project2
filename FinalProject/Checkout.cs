@@ -71,8 +71,8 @@ namespace FinalProject
             }
         }
 
-            private void btnCheckout2_Click(object sender, EventArgs e)
-            {
+        private void btnCheckout2_Click(object sender, EventArgs e)
+        {
             if (decimal.TryParse(txtBoxPayment.Text, out decimal payment))
             {
                 if (payment >= totalAmount)

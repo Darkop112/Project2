@@ -67,7 +67,7 @@
             btnPrint.TabIndex = 2;
             btnPrint.Text = "Print";
             btnPrint.UseVisualStyleBackColor = true;
-            btnPrint.Click += button1_Click;
+           
             // 
             // SalesHistory
             // 
