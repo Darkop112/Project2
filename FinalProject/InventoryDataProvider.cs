@@ -6,10 +6,9 @@ namespace FinalProject
 {
     public class InventoryDataProvider
     {
-        public IEnumerable<InventoryItem> GetInventoryItems(DateTime startDate)
+        public IEnumerable<InventoryItem> GetInventoryItems(DateTime startDate, DateTime endDate)
         {
-            var inventory = Invent.GetInventory();
-            return inventory.Where(i => i.Date >= startDate);
+            return Invent.GetInventory().Where(i => i.Date >= startDate && i.Date <= endDate);
         }
     }
 }

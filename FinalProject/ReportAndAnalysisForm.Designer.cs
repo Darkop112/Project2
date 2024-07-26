@@ -1,14 +1,18 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace FinalProject
 {
     partial class ReportAndAnalysisForm
     {
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
         private Button salesTrendButton;
         private Button inventoryAnalysisButton;
         private Button profitAnalysisButton;
+        private Button filterButton;
         private Chart reportChart;
 
         protected override void Dispose(bool disposing)
@@ -22,58 +26,78 @@ namespace FinalProject
 
         private void InitializeComponent()
         {
-            this.salesTrendButton = new System.Windows.Forms.Button();
-            this.inventoryAnalysisButton = new System.Windows.Forms.Button();
-            this.profitAnalysisButton = new System.Windows.Forms.Button();
-            this.reportChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            ((System.ComponentModel.ISupportInitialize)(this.reportChart)).BeginInit();
-            this.SuspendLayout();
-
+            salesTrendButton = new Button();
+            inventoryAnalysisButton = new Button();
+            profitAnalysisButton = new Button();
+            filterButton = new Button();
+            reportChart = new Chart();
+            ((ISupportInitialize)reportChart).BeginInit();
+            SuspendLayout();
+            // 
             // salesTrendButton
-            this.salesTrendButton.Location = new System.Drawing.Point(12, 12);
-            this.salesTrendButton.Name = "salesTrendButton";
-            this.salesTrendButton.Size = new System.Drawing.Size(75, 23);
-            this.salesTrendButton.TabIndex = 0;
-            this.salesTrendButton.Text = "Sales Trend";
-            this.salesTrendButton.UseVisualStyleBackColor = true;
-
+            // 
+            salesTrendButton.Location = new Point(12, 15);
+            salesTrendButton.Margin = new Padding(3, 4, 3, 4);
+            salesTrendButton.Name = "salesTrendButton";
+            salesTrendButton.Size = new Size(120, 30);
+            salesTrendButton.TabIndex = 0;
+            salesTrendButton.Text = "Sales Trend";
+            salesTrendButton.UseVisualStyleBackColor = true;
+            // 
             // inventoryAnalysisButton
-            this.inventoryAnalysisButton.Location = new System.Drawing.Point(93, 12);
-            this.inventoryAnalysisButton.Name = "inventoryAnalysisButton";
-            this.inventoryAnalysisButton.Size = new System.Drawing.Size(125, 23);
-            this.inventoryAnalysisButton.TabIndex = 1;
-            this.inventoryAnalysisButton.Text = "Inventory Analysis";
-            this.inventoryAnalysisButton.UseVisualStyleBackColor = true;
-
+            // 
+            inventoryAnalysisButton.Location = new Point(138, 15);
+            inventoryAnalysisButton.Margin = new Padding(3, 4, 3, 4);
+            inventoryAnalysisButton.Name = "inventoryAnalysisButton";
+            inventoryAnalysisButton.Size = new Size(150, 30);
+            inventoryAnalysisButton.TabIndex = 1;
+            inventoryAnalysisButton.Text = "Inventory Analysis";
+            inventoryAnalysisButton.UseVisualStyleBackColor = true;
+            // 
             // profitAnalysisButton
-            this.profitAnalysisButton.Location = new System.Drawing.Point(224, 12);
-            this.profitAnalysisButton.Name = "profitAnalysisButton";
-            this.profitAnalysisButton.Size = new System.Drawing.Size(100, 23);
-            this.profitAnalysisButton.TabIndex = 2;
-            this.profitAnalysisButton.Text = "Profit Analysis";
-            this.profitAnalysisButton.UseVisualStyleBackColor = true;
-
+            // 
+            profitAnalysisButton.Location = new Point(294, 15);
+            profitAnalysisButton.Margin = new Padding(3, 4, 3, 4);
+            profitAnalysisButton.Name = "profitAnalysisButton";
+            profitAnalysisButton.Size = new Size(120, 30);
+            profitAnalysisButton.TabIndex = 2;
+            profitAnalysisButton.Text = "Profit Analysis";
+            profitAnalysisButton.UseVisualStyleBackColor = true;
+            // 
+            // filterButton
+            // 
+            filterButton.Location = new Point(420, 15);
+            filterButton.Margin = new Padding(3, 4, 3, 4);
+            filterButton.Name = "filterButton";
+            filterButton.Size = new Size(100, 30);
+            filterButton.TabIndex = 3;
+            filterButton.Text = "Filter";
+            filterButton.UseVisualStyleBackColor = true;
+            // 
             // reportChart
-            this.reportChart.Location = new System.Drawing.Point(12, 41);
-            this.reportChart.Name = "reportChart";
-            this.reportChart.Size = new System.Drawing.Size(776, 397);
-            this.reportChart.TabIndex = 3;
-            this.reportChart.Text = "chart1";
-
+            // 
+            reportChart.Location = new Point(12, 60);
+            reportChart.Margin = new Padding(3, 4, 3, 4);
+            reportChart.Name = "reportChart";
+            reportChart.Size = new Size(960, 450);
+            reportChart.TabIndex = 4;
+            reportChart.Text = "chart1";
+            // 
             // ReportAndAnalysisForm
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.reportChart);
-            this.Controls.Add(this.profitAnalysisButton);
-            this.Controls.Add(this.inventoryAnalysisButton);
-            this.Controls.Add(this.salesTrendButton);
-            this.Name = "ReportAndAnalysisForm";
-            this.Text = "Report And Analysis";
-            ((System.ComponentModel.ISupportInitialize)(this.reportChart)).EndInit();
-            this.ResumeLayout(false);
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(985, 520);
+            ControlBox = false;
+            Controls.Add(reportChart);
+            Controls.Add(filterButton);
+            Controls.Add(profitAnalysisButton);
+            Controls.Add(inventoryAnalysisButton);
+            Controls.Add(salesTrendButton);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "ReportAndAnalysisForm";
+            ((ISupportInitialize)reportChart).EndInit();
+            ResumeLayout(false);
         }
-
-     
     }
 }

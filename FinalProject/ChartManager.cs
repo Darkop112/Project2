@@ -10,6 +10,7 @@ namespace FinalProject
         public ChartManager(Chart chart)
         {
             _chart = chart;
+            _chart.ChartAreas.Add(new ChartArea());
         }
 
         public void DisplayChart(string seriesName, SeriesChartType chartType, IEnumerable<dynamic> data, string xValueMember, string yValueMembers)

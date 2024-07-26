@@ -10,6 +10,8 @@ namespace FinalProject
         private readonly SalesDataProvider _salesDataProvider;
         private readonly InventoryDataProvider _inventoryDataProvider;
         private readonly ChartManager _chartManager;
+        private int _selectedYear;
+        private int _selectedMonth;
 
         public ReportAndAnalysisForm()
         {
@@ -18,24 +20,37 @@ namespace FinalProject
             _inventoryDataProvider = new InventoryDataProvider();
             _chartManager = new ChartManager(reportChart);
 
+            _selectedYear = DateTime.Now.Year;
+            _selectedMonth = DateTime.Now.Month;
+
+            // Event handler subscriptions
             salesTrendButton.Click += SalesTrendButton_Click;
             inventoryAnalysisButton.Click += InventoryAnalysisButton_Click;
             profitAnalysisButton.Click += ProfitAnalysisButton_Click;
+            filterButton.Click += FilterButton_Click;
         }
 
         private void SalesTrendButton_Click(object sender, EventArgs e)
         {
             try
             {
-                var lastMonth = DateTime.Today.AddMonths(-1);
-                var sales = _salesDataProvider.GetSales(lastMonth);
+                var startOfMonth = new DateTime(_selectedYear, _selectedMonth, 1);
+                var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+                var sales = _salesDataProvider.GetSales(startOfMonth, endOfMonth).ToList();
+
+                if (!sales.Any())
+                {
+                    MessageBox.Show("No sales data available for the selected month.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
                 var salesData = sales
-                    .GroupBy(s => s.Items.First().Name)
+                    .SelectMany(s => s.Items)
+                    .GroupBy(i => i.Name)
                     .Select(g => new
                     {
                         FruitName = g.Key,
-                        Quantity = g.Sum(s => s.Items.First().Quantity)
+                        Quantity = g.Sum(i => i.Quantity)
                     })
                     .ToList();
 
@@ -51,8 +66,15 @@ namespace FinalProject
         {
             try
             {
-                var lastMonth = DateTime.Today.AddMonths(-1);
-                var inventory = _inventoryDataProvider.GetInventoryItems(lastMonth);
+                var startOfMonth = new DateTime(_selectedYear, _selectedMonth, 1);
+                var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+                var inventory = _inventoryDataProvider.GetInventoryItems(startOfMonth, endOfMonth).ToList();
+
+                if (!inventory.Any())
+                {
+                    MessageBox.Show("No inventory data available for the selected month.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
                 var inventoryData = inventory
                     .GroupBy(i => i.FruitName)
@@ -75,23 +97,43 @@ namespace FinalProject
         {
             try
             {
-                var lastYear = DateTime.Today.AddYears(-1);
-                var sales = _salesDataProvider.GetSales(lastYear);
+                var startOfYear = new DateTime(_selectedYear, 1, 1);
+                var endOfYear = new DateTime(_selectedYear, 12, 31);
+                var sales = _salesDataProvider.GetSales(startOfYear, endOfYear).ToList();
+
+                if (!sales.Any())
+                {
+                    MessageBox.Show("No sales data available for the selected year.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
                 var profitData = sales
-                    .GroupBy(s => s.Date.ToString("yyyy-MM"))
+                    .SelectMany(s => s.Items)
+                    .GroupBy(i => i.Name)
                     .Select(g => new
                     {
-                        Month = g.Key,
-                        Profit = g.Sum(s => s.TotalAmount)
+                        FruitName = g.Key,
+                        TotalProfit = g.Sum(i => i.Quantity * i.Price)
                     })
                     .ToList();
 
-                _chartManager.DisplayChart("ProfitAnalysis", SeriesChartType.Line, profitData, "Month", "Profit");
+                _chartManager.DisplayChart("ProfitAnalysis", SeriesChartType.Bar, profitData, "FruitName", "TotalProfit");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading profit analysis data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void FilterButton_Click(object sender, EventArgs e)
+        {
+            using (var filterForm = new FilterForm(_selectedYear, _selectedMonth))
+            {
+                if (filterForm.ShowDialog() == DialogResult.OK)
+                {
+                    _selectedYear = filterForm.SelectedYear;
+                    _selectedMonth = filterForm.SelectedMonth;
+                }
             }
         }
     }

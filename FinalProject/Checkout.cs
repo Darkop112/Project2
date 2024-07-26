@@ -81,15 +81,18 @@ namespace FinalProject
                     decimal change = payment - totalAmount;
                     txtBoxChange.Text = change.ToString("C");
 
-                    Sale sale = new Sale
-                    {
-                        Date = DateTime.Now,
-                        Items = cartItems,
-                        TotalAmount = totalAmount,
-                        PaymentMethod = paymentMethod,
-                        Payment = payment,
-                        Change = change
-                    };
+                    // Create SaleItem objects with Name, Quantity, and Price
+                    var saleItems = cartItems.Select(ci => new SaleItem(ci.Name, ci.Quantity, ci.Price)).ToList();
+
+                    // Create Sale object using all required parameters
+                    Sale sale = new Sale(
+                        DateTime.Now,
+                        saleItems,
+                        totalAmount,
+                        paymentMethod,
+                        payment,
+                        change
+                    );
 
                     SalesHistory.AddSale(sale);
 
