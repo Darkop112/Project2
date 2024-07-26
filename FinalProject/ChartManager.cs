@@ -1,33 +1,29 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms.DataVisualization.Charting;
+﻿using System.Windows.Forms.DataVisualization.Charting;
 
-namespace FinalProject
+public class ChartManager
 {
-    public class ChartManager
+    private readonly Chart _chart;
+
+    public ChartManager(Chart chart)
     {
-        private readonly Chart _chart;
+        _chart = chart;
+        _chart.ChartAreas.Add(new ChartArea());
+    }
 
-        public ChartManager(Chart chart)
+    public void DisplayChart(string seriesName, SeriesChartType chartType, IEnumerable<dynamic> data, string xValueMember, string yValueMember)
+    {
+        _chart.Series.Clear();
+        _chart.DataSource = data;
+
+        var series = new Series
         {
-            _chart = chart;
-            _chart.ChartAreas.Add(new ChartArea());
-        }
+            Name = seriesName,
+            XValueMember = xValueMember,
+            YValueMembers = yValueMember,
+            ChartType = chartType
+        };
 
-        public void DisplayChart(string seriesName, SeriesChartType chartType, IEnumerable<dynamic> data, string xValueMember, string yValueMembers)
-        {
-            _chart.Series.Clear();
-            _chart.DataSource = data;
-
-            var series = new Series
-            {
-                Name = seriesName,
-                XValueMember = xValueMember,
-                YValueMembers = yValueMembers,
-                ChartType = chartType
-            };
-
-            _chart.Series.Add(series);
-            _chart.DataBind();
-        }
+        _chart.Series.Add(series);
+        _chart.DataBind();
     }
 }

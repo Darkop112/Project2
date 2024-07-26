@@ -26,6 +26,11 @@ namespace FinalProject
 
         private void InitializeComponent()
         {
+            ChartArea chartArea1 = new ChartArea();
+            ChartArea chartArea2 = new ChartArea();
+            ChartArea chartArea3 = new ChartArea();
+            ChartArea chartArea4 = new ChartArea();
+            ChartArea chartArea5 = new ChartArea();
             salesTrendButton = new Button();
             inventoryAnalysisButton = new Button();
             profitAnalysisButton = new Button();
@@ -36,65 +41,74 @@ namespace FinalProject
             // 
             // salesTrendButton
             // 
-            salesTrendButton.Location = new Point(12, 15);
-            salesTrendButton.Margin = new Padding(3, 4, 3, 4);
+            salesTrendButton.Location = new Point(15, 15);
+            salesTrendButton.Margin = new Padding(4);
             salesTrendButton.Name = "salesTrendButton";
-            salesTrendButton.Size = new Size(120, 30);
+            salesTrendButton.Size = new Size(172, 26);
             salesTrendButton.TabIndex = 0;
-            salesTrendButton.Text = "Sales Trend";
+            salesTrendButton.Text = "Sales Trend Analysis";
             salesTrendButton.UseVisualStyleBackColor = true;
             // 
             // inventoryAnalysisButton
             // 
-            inventoryAnalysisButton.Location = new Point(138, 15);
-            inventoryAnalysisButton.Margin = new Padding(3, 4, 3, 4);
+            inventoryAnalysisButton.Location = new Point(207, 15);
+            inventoryAnalysisButton.Margin = new Padding(4);
             inventoryAnalysisButton.Name = "inventoryAnalysisButton";
-            inventoryAnalysisButton.Size = new Size(150, 30);
+            inventoryAnalysisButton.Size = new Size(188, 26);
             inventoryAnalysisButton.TabIndex = 1;
             inventoryAnalysisButton.Text = "Inventory Analysis";
             inventoryAnalysisButton.UseVisualStyleBackColor = true;
             // 
             // profitAnalysisButton
             // 
-            profitAnalysisButton.Location = new Point(294, 15);
-            profitAnalysisButton.Margin = new Padding(3, 4, 3, 4);
+            profitAnalysisButton.Location = new Point(410, 15);
+            profitAnalysisButton.Margin = new Padding(4);
             profitAnalysisButton.Name = "profitAnalysisButton";
-            profitAnalysisButton.Size = new Size(120, 30);
+            profitAnalysisButton.Size = new Size(179, 26);
             profitAnalysisButton.TabIndex = 2;
             profitAnalysisButton.Text = "Profit Analysis";
             profitAnalysisButton.UseVisualStyleBackColor = true;
             // 
             // filterButton
             // 
-            filterButton.Location = new Point(420, 15);
-            filterButton.Margin = new Padding(3, 4, 3, 4);
+            filterButton.Location = new Point(597, 15);
+            filterButton.Margin = new Padding(4);
             filterButton.Name = "filterButton";
-            filterButton.Size = new Size(100, 30);
+            filterButton.Size = new Size(222, 26);
             filterButton.TabIndex = 3;
             filterButton.Text = "Filter";
             filterButton.UseVisualStyleBackColor = true;
             // 
             // reportChart
             // 
-            reportChart.Location = new Point(12, 60);
-            reportChart.Margin = new Padding(3, 4, 3, 4);
+            chartArea1.Name = "ChartArea1";
+            chartArea2.Name = "ChartArea2";
+            chartArea3.Name = "ChartArea3";
+            chartArea4.Name = "ChartArea4";
+            chartArea5.Name = "ChartArea5";
+            reportChart.ChartAreas.Add(chartArea1);
+            reportChart.ChartAreas.Add(chartArea2);
+            reportChart.ChartAreas.Add(chartArea3);
+            reportChart.ChartAreas.Add(chartArea4);
+            reportChart.ChartAreas.Add(chartArea5);
+            reportChart.Location = new Point(2, 101);
+            reportChart.Margin = new Padding(3, 2, 3, 2);
             reportChart.Name = "reportChart";
-            reportChart.Size = new Size(960, 450);
-            reportChart.TabIndex = 4;
-            reportChart.Text = "chart1";
+            reportChart.Size = new Size(1702, 662);
+            reportChart.TabIndex = 0;
             // 
             // ReportAndAnalysisForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(985, 520);
+            ClientSize = new Size(855, 388);
             ControlBox = false;
             Controls.Add(reportChart);
             Controls.Add(filterButton);
             Controls.Add(profitAnalysisButton);
             Controls.Add(inventoryAnalysisButton);
             Controls.Add(salesTrendButton);
-            Margin = new Padding(3, 4, 3, 4);
+            Margin = new Padding(4);
             Name = "ReportAndAnalysisForm";
             ((ISupportInitialize)reportChart).EndInit();
             ResumeLayout(false);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -44,6 +45,7 @@ namespace FinalProject
                     return;
                 }
 
+                // Collect all items and group by their name, summing their quantities
                 var salesData = sales
                     .SelectMany(s => s.Items)
                     .GroupBy(i => i.Name)
@@ -54,7 +56,14 @@ namespace FinalProject
                     })
                     .ToList();
 
-                _chartManager.DisplayChart("SalesTrend", SeriesChartType.Bar, salesData, "FruitName", "Quantity");
+                if (!salesData.Any())
+                {
+                    MessageBox.Show("No sales data available for the selected items.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Ensure the chart type supports multiple data points
+                _chartManager.DisplayChart("SalesTrend", SeriesChartType.Column, salesData, "FruitName", "Quantity");
             }
             catch (Exception ex)
             {
@@ -85,7 +94,7 @@ namespace FinalProject
                     })
                     .ToList();
 
-                _chartManager.DisplayChart("InventoryAnalysis", SeriesChartType.Bar, inventoryData, "FruitName", "Quantity");
+                _chartManager.DisplayChart("InventoryAnalysis", SeriesChartType.Column, inventoryData, "FruitName", "Quantity");
             }
             catch (Exception ex)
             {
@@ -117,7 +126,7 @@ namespace FinalProject
                     })
                     .ToList();
 
-                _chartManager.DisplayChart("ProfitAnalysis", SeriesChartType.Bar, profitData, "FruitName", "TotalProfit");
+                _chartManager.DisplayChart("ProfitAnalysis", SeriesChartType.Column, profitData, "FruitName", "TotalProfit");
             }
             catch (Exception ex)
             {
