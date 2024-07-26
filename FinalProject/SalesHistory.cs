@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace FinalProject
 {
-   
+
     public partial class SalesHistory : Form
     {
         private static List<Sale> sales = new List<Sale>();
@@ -150,7 +150,7 @@ namespace FinalProject
             return lines;
         }
 
-      
+
     }
     public class Sale
     {

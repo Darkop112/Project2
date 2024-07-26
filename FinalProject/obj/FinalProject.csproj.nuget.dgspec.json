@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj": {}
+    "C:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj": {}
   },
   "projects": {
-    "D:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj": {
+    "C:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj",
+        "projectUniqueName": "C:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj",
         "projectName": "FinalProject",
-        "projectPath": "D:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj",
+        "projectPath": "C:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj",
         "packagesPath": "C:\\Users\\Darky\\.nuget\\packages\\",
-        "outputPath": "D:\\C# Project\\FinalProject\\FinalProject\\obj\\",
+        "outputPath": "C:\\C# Project\\FinalProject\\FinalProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Darky\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,12 @@
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "WinForms.DataVisualization": {
+              "target": "Package",
+              "version": "[1.9.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

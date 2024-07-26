@@ -13,6 +13,18 @@
     <Compile Update="ManageSales.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ManageSalesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ReportAndAnalysisForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ReportInSalesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="RestockForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="SalesHistory.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9D5hZRCHShmDyDP1dPHml+HTvOq8O5Wz17bSVNnwRIEd2Ane1Tl6eE2rVRgz2lBvPV9mAklEdcNotbZyVD6wHA==",
+  "dgSpecHash": "ImJlj4WNAtrBdX7uX29zz6YMYUMHSPGfKLfIhTCHNHi2mHvUeFwMTR5uCPpMXEyFW0MxaHJ/QmcecSZFNg5Qiw==",
   "success": true,
-  "projectFilePath": "D:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\C# Project\\FinalProject\\FinalProject\\FinalProject.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Darky\\.nuget\\packages\\winforms.datavisualization\\1.9.2\\winforms.datavisualization.1.9.2.nupkg.sha512"
+  ],
   "logs": []
 }

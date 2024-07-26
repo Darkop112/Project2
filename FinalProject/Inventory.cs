@@ -169,5 +169,30 @@ namespace FinalProject
                 InventoryManager.FruitSupplies["Watermelon"] = supply;
             }
         }
+
+        private void btnRestock_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (frmRestock restockForm = new frmRestock())
+                {
+                    if (restockForm.ShowDialog() == DialogResult.OK)
+                    {
+                        foreach (var item in restockForm.RestockItems)
+                        {
+                            if (InventoryManager.FruitSupplies.ContainsKey(item.Key))
+                            {
+                                InventoryManager.FruitSupplies[item.Key] += item.Value;
+                            }
+                        }
+                        Inventory_Load(sender, e);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
     }
 }
